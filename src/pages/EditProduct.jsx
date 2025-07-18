@@ -16,7 +16,7 @@ const EditProduct = () => {
     const token = localStorage.getItem("accessToken");
 
     axios
-      .get(`http://127.0.0.1:8000/api/inventory/products/${id}/`, {
+      .get(`https://canineracks-backend.onrender.com/api/inventory/products/${id}/`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -74,7 +74,7 @@ const EditProduct = () => {
     const token = localStorage.getItem("accessToken");
 
     try {
-      const res = await axios.get('http://127.0.0.1:8000/api/inventory/products/', {
+      const res = await axios.get('https://canineracks-backend.onrender.com/api/inventory/products/', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const total = res.data.reduce((sum, p) => sum + (p.id === product.id ? 0 : p.quantity), 0);
@@ -93,7 +93,7 @@ const EditProduct = () => {
 
     try {
       await axios.put(
-        `http://127.0.0.1:8000/api/inventory/products/${id}/`,
+        `https://canineracks-backend.onrender.com/api/inventory/products/${id}/`,
         formData,
         {
           headers: {
@@ -250,7 +250,7 @@ const EditProduct = () => {
                 src={
                   imagePreview.startsWith('blob:')
                     ? imagePreview
-                    : `http://127.0.0.1:8000${imagePreview}`
+                    : `https://canineracks-backend.onrender.com${imagePreview}`
                 }
                 alt="Product"
                 className="w-full h-full object-cover"

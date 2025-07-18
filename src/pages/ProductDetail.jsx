@@ -16,12 +16,12 @@ const ProductDetail = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/inventory/products/${id}/`, authHeaders)
+      .get(`https://canineracks-backend.onrender.com/api/inventory/products/${id}/`, authHeaders)
       .then((res) => setProduct(res.data))
       .catch((err) => console.error("Error fetching product:", err));
 
     axios
-      .get(`http://localhost:8000/api/inventory/products/${id}/history/`, authHeaders)
+      .get(`https://canineracks-backend.onrender.com/api/inventory/products/${id}/history/`, authHeaders)
       .then((res) => setHistory(res.data))
       .catch((err) => console.error("Error fetching history:", err));
   }, [id]);
@@ -32,7 +32,7 @@ const ProductDetail = () => {
   const handleDelete = async () => {
     const token = localStorage.getItem("accessToken");
     try {
-      const res = await axios.delete(`http://127.0.0.1:8000/api/inventory/products/${id}/`, {
+      const res = await axios.delete(`https://canineracks-backend.onrender.com/api/inventory/products/${id}/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
   

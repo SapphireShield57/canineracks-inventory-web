@@ -30,7 +30,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8000/api/user/reset-password/", {
+      await axios.post("https://canineracks-backend.onrender.com/api/user/reset-password/", {
         email,
         code,
         new_password: newPassword,

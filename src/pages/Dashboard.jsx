@@ -31,7 +31,7 @@ const DashboardPage = () => {
     }
 
     axios
-      .get("http://127.0.0.1:8000/api/inventory/products/", {
+      .get("https://canineracks-backend.onrender.com/api/inventory/products/", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => setProducts(response.data))
@@ -76,7 +76,7 @@ const DashboardPage = () => {
 
     const updates = Object.entries(editedQuantities).map(([id, quantity]) => {
       return axios.patch(
-        `http://127.0.0.1:8000/api/inventory/products/${id}/`,
+        `https://canineracks-backend.onrender.com/api/inventory/products/${id}/`,
         { quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );

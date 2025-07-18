@@ -25,7 +25,7 @@ const ForgotPasswordVerify = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/api/user/verify-code/", {
+      const response = await fetch("https://canineracks-backend.onrender.com/api/user/verify-code/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code, purpose: "reset" }),

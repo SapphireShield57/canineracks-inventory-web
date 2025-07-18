@@ -85,7 +85,7 @@ const AddProduct = () => {
     });
 
     try {
-      await axios.post('http://127.0.0.1:8000/api/inventory/products/', formData, {
+      await axios.post('https://canineracks-backend.onrender.com/api/inventory/products/', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
