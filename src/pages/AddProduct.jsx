@@ -1,3 +1,4 @@
+// ⬆ keep existing imports
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -25,13 +26,12 @@ const AddProduct = () => {
     supplier_name: '',
     main_category: '',
     sub_category: '',
-    date_purchased: '',
+    date_purchased: '', // ✅ Added
     image: null,
   });
 
   const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,8 +66,8 @@ const AddProduct = () => {
     } = form;
 
     if (
-      !name.trim() || !description.trim() || !quantity || !product_code.trim() ||
-      !selling_price || !purchased_price || !supplier_name.trim() ||
+      !name || !description || !quantity || !product_code ||
+      !selling_price || !purchased_price || !supplier_name ||
       !main_category || !sub_category || !date_purchased || !image
     ) {
       setError('Please fill in all required fields including image.');
@@ -79,19 +79,13 @@ const AddProduct = () => {
       return;
     }
 
-    if (parseFloat(selling_price) <= 0 || parseFloat(purchased_price) <= 0) {
-      setError('Prices must be greater than 0.');
-      return;
-    }
-
     const formData = new FormData();
     Object.entries(form).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
     try {
-      setLoading(true);
-      await axios.post('https://canineracks-backend.onrender.com/api/inventory/products/', formData, {
+      await axios.post('http://127.0.0.1:8000/api/inventory/products/', formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
@@ -103,8 +97,6 @@ const AddProduct = () => {
     } catch (err) {
       console.error(err);
       setError('Failed to save product. Please check your inputs.');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -120,29 +112,95 @@ const AddProduct = () => {
           <h2 className="text-3xl font-bold text-center">Add Product</h2>
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          {/* Form Fields */}
-          {/* Same as before — no structural changes needed — unchanged blocks omitted for brevity */}
+          {/* Name */}
+          <div>
+            <label className="block font-medium">Name <span className="text-red-500">*</span></label>
+            <input name="name" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
+          </div>
 
+          {/* Description */}
+          <div>
+            <label className="block font-medium">Description <span className="text-red-500">*</span></label>
+            <textarea name="description" rows="3" className="w-full p-3 border rounded" onChange={handleChange}></textarea>
+          </div>
+
+          {/* Quantity + Product Code */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block font-medium">Quantity <span className="text-red-500">*</span></label>
+              <input name="quantity" type="number" className="w-full p-3 border rounded" onChange={handleChange} />
+            </div>
+            <div>
+              <label className="block font-medium">Product Code <span className="text-red-500">*</span></label>
+              <input name="product_code" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
+            </div>
+
+            {/* Selling + Purchased Price */}
+            <div>
+              <label className="block font-medium">Selling Price (₱) <span className="text-red-500">*</span></label>
+              <input name="selling_price" type="number" className="w-full p-3 border rounded" onChange={handleChange} />
+            </div>
+            <div>
+              <label className="block font-medium">Purchased Price (₱) <span className="text-red-500">*</span></label>
+              <input name="purchased_price" type="number" className="w-full p-3 border rounded" onChange={handleChange} />
+            </div>
+
+            {/* Supplier Name */}
+            <div className="col-span-2">
+              <label className="block font-medium">Supplier <span className="text-red-500">*</span></label>
+              <input name="supplier_name" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
+            </div>
+
+            {/* Date Purchased */}
+            <div className="col-span-2">
+              <label className="block font-medium">Date Purchased <span className="text-red-500">*</span></label>
+              <input
+                type="date"
+                name="date_purchased"
+                className="w-full p-3 border rounded"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {/* Main & Sub Category */}
+          <div>
+            <label className="block font-medium">Main Category <span className="text-red-500">*</span></label>
+            <select name="main_category" className="w-full p-3 border rounded" onChange={handleChange}>
+              <option value="">Select Main Category</option>
+              {Object.keys(mainCategories).map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+
+          {form.main_category && (
+            <div>
+              <label className="block font-medium">Sub Category <span className="text-red-500">*</span></label>
+              <select name="sub_category" className="w-full p-3 border rounded" onChange={handleChange}>
+                <option value="">Select Sub Category</option>
+                {mainCategories[form.main_category].map((sub) => (
+                  <option key={sub} value={sub}>{sub}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Upload Image */}
           <div>
             <label className="block font-medium">Upload Product Image <span className="text-red-500">*</span></label>
             <input type="file" accept="image/*" onChange={handleFileChange} className="w-full" />
-            {form.image && <p className="text-sm mt-1 text-gray-600">Selected: {form.image.name}</p>}
+            <p className="text-sm text-gray-500 mt-1">You can drag and drop an image on the form as well.</p>
           </div>
 
+          {/* Buttons */}
           <div className="flex gap-4 pt-6">
-            <button
-              type="submit"
-              className={`px-6 py-3 rounded text-white ${loading ? 'bg-gray-500' : 'bg-cyan-600 hover:bg-cyan-700'}`}
-              disabled={loading}
-            >
-              {loading ? 'Saving...' : 'Save'}
-            </button>
-            <button type="button" onClick={() => navigate('/dashboard')} className="bg-red-600 text-white px-6 py-3 rounded hover:bg-red-700">
-              Back
-            </button>
+            <button type="submit" className="bg-cyan-600 text-white px-6 py-3 rounded hover:bg-cyan-700">Save</button>
+            <button type="button" onClick={() => navigate('/dashboard')} className="bg-red-600 text-white px-6 py-3 rounded hover:bg-red-700">Back</button>
           </div>
         </div>
 
+        {/* Right Image Preview */}
         <div className="md:w-1/3 flex items-center justify-center">
           <div className="w-full h-64 border rounded flex items-center justify-center bg-gray-50">
             {imagePreview ? (
