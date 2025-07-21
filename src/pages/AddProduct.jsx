@@ -1,4 +1,3 @@
-// ⬆ keep existing imports
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -26,7 +25,7 @@ const AddProduct = () => {
     supplier_name: '',
     main_category: '',
     sub_category: '',
-    date_purchased: '', // ✅ Added
+    date_purchased: '',
     image: null,
   });
 
@@ -85,7 +84,7 @@ const AddProduct = () => {
     });
 
     try {
-      await axios.post('http://127.0.0.1:8000/api/inventory/products/', formData, {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/inventory/products/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
@@ -112,19 +111,16 @@ const AddProduct = () => {
           <h2 className="text-3xl font-bold text-center">Add Product</h2>
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          {/* Name */}
           <div>
             <label className="block font-medium">Name <span className="text-red-500">*</span></label>
             <input name="name" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block font-medium">Description <span className="text-red-500">*</span></label>
             <textarea name="description" rows="3" className="w-full p-3 border rounded" onChange={handleChange}></textarea>
           </div>
 
-          {/* Quantity + Product Code */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block font-medium">Quantity <span className="text-red-500">*</span></label>
@@ -135,7 +131,6 @@ const AddProduct = () => {
               <input name="product_code" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
             </div>
 
-            {/* Selling + Purchased Price */}
             <div>
               <label className="block font-medium">Selling Price (₱) <span className="text-red-500">*</span></label>
               <input name="selling_price" type="number" className="w-full p-3 border rounded" onChange={handleChange} />
@@ -145,25 +140,17 @@ const AddProduct = () => {
               <input name="purchased_price" type="number" className="w-full p-3 border rounded" onChange={handleChange} />
             </div>
 
-            {/* Supplier Name */}
             <div className="col-span-2">
               <label className="block font-medium">Supplier <span className="text-red-500">*</span></label>
               <input name="supplier_name" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
             </div>
 
-            {/* Date Purchased */}
             <div className="col-span-2">
               <label className="block font-medium">Date Purchased <span className="text-red-500">*</span></label>
-              <input
-                type="date"
-                name="date_purchased"
-                className="w-full p-3 border rounded"
-                onChange={handleChange}
-              />
+              <input type="date" name="date_purchased" className="w-full p-3 border rounded" onChange={handleChange} />
             </div>
           </div>
 
-          {/* Main & Sub Category */}
           <div>
             <label className="block font-medium">Main Category <span className="text-red-500">*</span></label>
             <select name="main_category" className="w-full p-3 border rounded" onChange={handleChange}>
@@ -186,21 +173,18 @@ const AddProduct = () => {
             </div>
           )}
 
-          {/* Upload Image */}
           <div>
             <label className="block font-medium">Upload Product Image <span className="text-red-500">*</span></label>
             <input type="file" accept="image/*" onChange={handleFileChange} className="w-full" />
-            <p className="text-sm text-gray-500 mt-1">You can drag and drop an image on the form as well.</p>
+            <p className="text-sm text-gray-500 mt-1">You can drag and drop an image as well.</p>
           </div>
 
-          {/* Buttons */}
           <div className="flex gap-4 pt-6">
             <button type="submit" className="bg-cyan-600 text-white px-6 py-3 rounded hover:bg-cyan-700">Save</button>
             <button type="button" onClick={() => navigate('/dashboard')} className="bg-red-600 text-white px-6 py-3 rounded hover:bg-red-700">Back</button>
           </div>
         </div>
 
-        {/* Right Image Preview */}
         <div className="md:w-1/3 flex items-center justify-center">
           <div className="w-full h-64 border rounded flex items-center justify-center bg-gray-50">
             {imagePreview ? (
