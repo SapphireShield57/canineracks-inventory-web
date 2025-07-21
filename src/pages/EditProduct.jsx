@@ -247,11 +247,7 @@ const EditProduct = () => {
           <div className="w-64 h-64 border rounded overflow-hidden bg-gray-50 flex items-center justify-center">
             {imagePreview ? (
               <img
-                src={
-                  imagePreview.startsWith('blob:')
-                    ? imagePreview
-                    : `https://canineracks-backend.onrender.com${imagePreview}`
-                }
+                src={imagePreview}
                 alt="Product"
                 className="w-full h-full object-cover"
               />
