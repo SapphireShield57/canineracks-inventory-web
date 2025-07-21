@@ -86,8 +86,8 @@ const AddProduct = () => {
     try {
       await axios.post(`${import.meta.env.VITE_API_BASE_URL}/inventory/products/`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-          "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
 
@@ -111,6 +111,7 @@ const AddProduct = () => {
           <h2 className="text-3xl font-bold text-center">Add Product</h2>
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
+          {/* Form Fields */}
           <div>
             <label className="block font-medium">Name <span className="text-red-500">*</span></label>
             <input name="name" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
@@ -130,7 +131,6 @@ const AddProduct = () => {
               <label className="block font-medium">Product Code <span className="text-red-500">*</span></label>
               <input name="product_code" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
             </div>
-
             <div>
               <label className="block font-medium">Selling Price (₱) <span className="text-red-500">*</span></label>
               <input name="selling_price" type="number" className="w-full p-3 border rounded" onChange={handleChange} />
@@ -176,7 +176,7 @@ const AddProduct = () => {
           <div>
             <label className="block font-medium">Upload Product Image <span className="text-red-500">*</span></label>
             <input type="file" accept="image/*" onChange={handleFileChange} className="w-full" />
-            <p className="text-sm text-gray-500 mt-1">You can drag and drop an image as well.</p>
+            <p className="text-sm text-gray-500 mt-1">Drag and drop also supported.</p>
           </div>
 
           <div className="flex gap-4 pt-6">
