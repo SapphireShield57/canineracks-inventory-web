@@ -106,10 +106,15 @@ const ProductDetail = () => {
       <div className="bg-white p-6 rounded-xl w-full md:w-1/2 flex flex-col items-center shadow-md">
         {product.image ? (
           <img
-            src={product.image}
+            src={
+              product.image?.startsWith("http")
+                ? product.image
+                : `https://res.cloudinary.com/dez33rrls/${product.image}`
+            }
             alt={product.name}
             className="w-48 h-48 object-contain mb-4 border rounded shadow"
           />
+
         ) : (
           <div className="w-48 h-48 flex items-center justify-center bg-gray-100 border rounded mb-4 text-gray-500 text-sm">
             No image available
