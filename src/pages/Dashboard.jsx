@@ -19,7 +19,7 @@ const DashboardPage = () => {
     Food: ["Dry", "Wet", "Raw"],
     Treat: ["Dental", "Training"],
     Health: ["Vitamins", "Tick & Flea", "Recovery Collars"],
-    Grooming: ["Shampoo & Conditioners", "Pet Brush", "Spritz & Wipes"],
+    Grooming: ["Shampoo & Conditioner", "Pet Brush", "Spritz & Wipes"],
     Wellness: ["Toys", "Beds & Kennels", "Harness & Leashes"],
   };
 
