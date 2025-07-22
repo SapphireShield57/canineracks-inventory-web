@@ -8,8 +8,8 @@ const MAX_CAPACITY = 2000;
 const mainCategories = {
   Food: ['Dry', 'Wet', 'Raw'],
   Treat: ['Dental', 'Training'],
-  Health: ['Vitamins', 'Tick & Flea / Parasite Prevention', 'Recovery Collars'],
-  Grooming: ['Shampoo & Conditioners', 'Pet Brush', 'Spritz & Wipes'],
+  Health: ['Vitamins', 'Tick & Flea', 'Recovery Collars'],
+  Grooming: ['Shampoo & Conditioner', 'Pet Brush', 'Spritz & Wipes'],
   Wellness: ['Toys', 'Beds & Kennels', 'Harness & Leashes'],
 };
 
@@ -86,7 +86,6 @@ const AddProduct = () => {
     try {
       await axios.post('https://canineracks-backend.onrender.com/api/inventory/products/', formData, {
         headers: {
-          // 'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
@@ -105,13 +104,13 @@ const AddProduct = () => {
         onSubmit={handleSubmit}
         onDragOver={(e) => e.preventDefault()}
         onDrop={handleDrop}
+        encType="multipart/form-data" // ✅ Required for file uploads
         className="w-full max-w-6xl bg-white p-8 rounded-xl shadow-xl flex flex-col md:flex-row gap-8"
       >
         <div className="md:w-2/3 space-y-4">
           <h2 className="text-3xl font-bold text-center">Add Product</h2>
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
-          {/* Form Fields */}
           <div>
             <label className="block font-medium">Name <span className="text-red-500">*</span></label>
             <input name="name" type="text" className="w-full p-3 border rounded" onChange={handleChange} />
@@ -178,7 +177,7 @@ const AddProduct = () => {
             <input
               type="file"
               accept="image/*"
-              name="image"  // ✅ ADD THIS
+              name="image"
               onChange={handleFileChange}
               className="w-full"
             />
