@@ -18,7 +18,7 @@ const DashboardPage = () => {
   const subCategoryMap = {
     Food: ["Dry", "Wet", "Raw"],
     Treat: ["Dental", "Training"],
-    Health: ["Vitamins", "Tick & Flea / Parasite Prevention", "Recovery Collars"],
+    Health: ["Vitamins", "Tick & Flea", "Recovery Collars"],
     Grooming: ["Shampoo & Conditioners", "Pet Brush", "Spritz & Wipes"],
     Wellness: ["Toys", "Beds & Kennels", "Harness & Leashes"],
   };
