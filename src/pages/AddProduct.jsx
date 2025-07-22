@@ -86,7 +86,7 @@ const AddProduct = () => {
     try {
       await axios.post(`${import.meta.env.VITE_API_BASE_URL}/inventory/products/`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          // 'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
@@ -175,7 +175,13 @@ const AddProduct = () => {
 
           <div>
             <label className="block font-medium">Upload Product Image <span className="text-red-500">*</span></label>
-            <input type="file" accept="image/*" onChange={handleFileChange} className="w-full" />
+            <input
+              type="file"
+              accept="image/*"
+              name="image"  // ✅ ADD THIS
+              onChange={handleFileChange}
+              className="w-full"
+            />
             <p className="text-sm text-gray-500 mt-1">Drag and drop also supported.</p>
           </div>
 
