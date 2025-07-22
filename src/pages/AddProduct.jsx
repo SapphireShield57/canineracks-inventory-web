@@ -84,7 +84,7 @@ const AddProduct = () => {
     });
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/inventory/products/`, formData, {
+      await axios.post('https://canineracks-backend.onrender.com/api/inventory/products/', formData, {
         headers: {
           // 'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
